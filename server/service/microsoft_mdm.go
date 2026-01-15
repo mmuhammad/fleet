@@ -2526,7 +2526,7 @@ func ReconcileWindowsProfiles(ctx context.Context, ds fleet.Datastore, logger ki
 // to keep it simpler for now until we understand more.
 func buildCommandFromProfileBytes(profileBytes []byte, commandUUID string) (*fleet.MDMWindowsCommand, error) {
 	rawCommand := profileBytes
-	if strings.Contains(string(rawCommand), "/Vendor/MSFT/ClientCertificateInstall/SCEP") {
+	if strings.Contains(string(rawCommand), fleet.WINDOWS_SCEP_LOC_URI_PART) {
 		// It's a SCEP profile, so wrap it with <Atomic>
 		rawCommand = fmt.Appendf([]byte{}, "<Atomic>%s</Atomic>", rawCommand)
 	}
